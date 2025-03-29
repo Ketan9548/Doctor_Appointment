@@ -18,8 +18,17 @@ const Header = () => {
           </p>
         </div>
         <NavLink
-          to="#speciality"
-          className="flex items-center bg-white text-blue-600 px-6 py-3 rounded-full shadow-lg font-medium hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105"
+          to=""
+          onClick={(e) => {
+            e.preventDefault();
+            const section = document.getElementById("speciality");
+            if (section) {
+              section.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          className="flex items-center bg-white text-blue-600 px-6 py-3 
+             rounded-full shadow-lg font-medium hover:bg-gray-100 
+             transition duration-300 ease-in-out transform hover:scale-105"
         >
           Book Appointment
           <img className="ml-2 w-5 h-5" src={assets.arrow_icon} alt="Arrow" />

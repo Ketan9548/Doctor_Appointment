@@ -1,15 +1,17 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
 
   return (
     <>
-      <div className='mx-3 sm:mx-[6%]'>
-        <Navbar />
+      <Navbar />
+      <div className='mx-3 pt-36 sm:mx-[6%]'>
         <Outlet />
       </div>
+      <Footer />
     </>
   )
 }

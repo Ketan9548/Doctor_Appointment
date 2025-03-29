@@ -1,10 +1,17 @@
 import React from 'react'
+import { createContext } from 'react'
+import { doctors } from '../assets/assets'
 
-const AppContext = () => {
+export const AppContextProvider = createContext()
+
+const AppContext = ({ children }) => {
+    const value = { doctors };
     return (
-        <div>
-
-        </div>
+        <>
+            <AppContextProvider.Provider value={value}>
+                {children}
+            </AppContextProvider.Provider>
+        </>
     )
 }
 

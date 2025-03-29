@@ -1,9 +1,10 @@
-import React from "react";
-import { doctors } from "../assets/assets";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContextProvider } from "../context/AppContext";
 
 const Topdoctor = () => {
     const navigate = useNavigate();
+    const { doctors } = useContext(AppContextProvider);
     return (
         <div className="flex flex-col items-center gap-6 py-16 text-gray-800 bg-gray-50">
             {/* Heading */}
@@ -33,12 +34,18 @@ const Topdoctor = () => {
                             <p className="text-lg font-semibold text-gray-700">{item.name}</p>
                             <p className="text-gray-500 text-sm">{item.speciality}</p>
                         </div>
-                        <button onClick={()=>navigate(`/appointment/${item._id}`)} className="mt-4 bg-blue-500 text-white px-5 py-2 rounded-full 
+                        <button onClick={() => navigate(`/appointment/${item._id}`)} className="mt-4 bg-blue-500 text-white px-5 py-2 rounded-full 
                                text-sm cursor-pointer font-medium transition-all duration-300 hover:bg-blue-600">
                             More
                         </button>
                     </div>
                 ))}
+            </div>
+            <div>
+                <button onClick={() => { navigate('/alldoctor'); scrollTo(0, 0) }} className="mt-4 w-32 bg-indigo-500 text-white p-4 rounded-full 
+                               text-sm cursor-pointer font-medium transition-all duration-300 hover:bg-indigo-300">
+                    More Doctors..
+                </button>
             </div>
         </div>
     );
