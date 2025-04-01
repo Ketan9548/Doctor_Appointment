@@ -14,7 +14,7 @@ const Navbar = () => {
             <img
                 className="w-24 h-24 cursor-pointer hover:scale-110 transition-transform duration-300"
                 src={assets.logo}
-                onClick={() => navigate("/")}
+                onClick={() => { navigate("/"); scrollTo(0, 0) }}
                 alt="Logo"
             />
 

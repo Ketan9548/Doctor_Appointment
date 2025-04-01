@@ -30,7 +30,7 @@ const Footer = () => {
                     <p className="text-lg font-semibold text-black">GET IN TOUCH</p>
                     <ul className="space-y-2 text-black">
                         <li className="hover:text-indigo-500 cursor-pointer transition duration-300">+1-212-312-981</li>
-                        <li className="hover:text-indigo-500 cursor-pointer transition duration-300">doctorguider@gmail.com</li>
+                        <li onClick={() => window.location.href = "mailto:doctorguider@gmail.com"}  className="hover:text-indigo-500 cursor-pointer transition duration-300">doctorguider@gmail.com</li>
                     </ul>
                 </div>
             </div>

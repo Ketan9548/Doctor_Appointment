@@ -92,9 +92,9 @@ export const doctors = [
         image: D1,
         speciality: 'General physician',
         degree: 'MBBS',
-        experience: '4 Years',
+        experience: '5 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        fees: 70,
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
@@ -108,7 +108,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '3 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 60,
+        fees: 40,
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
@@ -122,7 +122,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '1 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 30,
+        fees: 20,
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
@@ -136,7 +136,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '2 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 40,
+        fees: 30,
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
@@ -164,7 +164,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        fees: 49,
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
@@ -260,9 +260,9 @@ export const doctors = [
         image: D13,
         speciality: 'General physician',
         degree: 'MBBS',
-        experience: '4 Years',
+        experience: '3 Years',
         about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        fees: 30,
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
