@@ -56,8 +56,8 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <button
-                        onClick={() => navigate("/login")}
-                        className="bg-blue-500 text-white px-6 py-2 rounded-full shadow-lg hover:bg-blue-600 transition duration-300 hidden md:block"
+                        onClick={() => { navigate("/login"); scrollTo(0, 0) }}
+                        className="bg-blue-500 text-white px-6 py-2 cursor-pointer rounded-full shadow-lg hover:bg-blue-600 transition duration-300 hidden md:block"
                     >
                         Create Account
                     </button>
