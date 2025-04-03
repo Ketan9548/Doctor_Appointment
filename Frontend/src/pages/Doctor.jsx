@@ -6,6 +6,7 @@ const Doctor = () => {
   const { speciality } = useParams();
   const navigate = useNavigate();
   const [filter, setFilter] = useState([]);
+  const [showFilter, setshowFilter] = useState(false);
   const pRefs = useRef([]);
 
   const { doctors } = useContext(AppContextProvider);
@@ -45,13 +46,18 @@ const Doctor = () => {
           <div className="md:col-span-1 bg-white p-6 rounded-xl shadow-md">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Specialties</h2>
             <div className="space-y-3">
-              <p ref={(el) => (pRefs.current[0] = el)} onClick={() => handleClick(0, '')} className="bg-blue-100 px-4 py-2 rounded-md text-center text-gray-600 hover:bg-blue-200 cursor-pointer transition">
+              <button className={`p-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'text-black bg-blue-500' : null}`} onClick={() => setshowFilter(prev => !prev)}>Filters</button>
+              <p ref={(el) => (pRefs.current[0] = el)} onClick={() => handleClick(0, '')} className={`bg-blue-100 px-4 py-2 ${showFilter ? 'flex' : 'hidden sm:flex'} w-full rounded-md text-center justify-center text-gray-600 hover:bg-blue-200 cursor-pointer transition`}>
                 All
               </p>
               {['General physician', 'Gynecologist', 'Dermatologist', 'Pediatricians', 'Neurologist', 'Gastroenterologist'].map((spec, index) => (
-                <p ref={(el) => (pRefs.current[index + 1] = el)} key={index} onClick={() => handleClick(index + 1, spec)} className="bg-blue-100 px-4 py-2 rounded-md text-center text-gray-600 hover:bg-blue-200 cursor-pointer transition">
-                  {spec}
-                </p>
+                <>
+                  <div className={`${showFilter ? 'flex' : 'hidden sm:flex'}`}>
+                    <p ref={(el) => (pRefs.current[index + 1] = el)} key={index} onClick={() => handleClick(index + 1, spec)} className="bg-blue-100 px-4 py-2 w-full rounded-md text-center text-gray-600 hover:bg-blue-200 cursor-pointer transition">
+                      {spec}
+                    </p>
+                  </div>
+                </>
               ))}
             </div>
           </div>

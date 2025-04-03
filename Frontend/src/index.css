@@ -9,3 +9,14 @@
 .active hr {
   @apply block;
 }
+
+::-webkit-scrollbar{
+  @apply hidden
+}
+
+
+@media (max-width:720px) {
+  .active p{
+    @apply text-blue-500;
+  }
+}

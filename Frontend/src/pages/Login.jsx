@@ -19,7 +19,7 @@ const Login = () => {
         </div>
         <div className="space-y-4">
           {state === "Sign Up" && <div>
-            <p className="text-gray-700 font-medium">Full Name</p>
+            <p className="text-gray-700 font-medium">Full Name</p> 
             <input
               type="text"
               value={name}
