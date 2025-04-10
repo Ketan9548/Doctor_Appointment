@@ -14,11 +14,8 @@ const Navbar = () => {
 
         setTimeout(() => {
             setShowDropdown(false);
-        }, 2000);
+        }, 1000);
     };
-
-
-
 
     return (
         <>
@@ -84,7 +81,7 @@ const Navbar = () => {
                     ) : (
                         <button
                             onClick={() => { navigate("/login"); scrollTo(0, 0) }}
-                            className="bg-blue-500 text-white px-6 py-2 cursor-pointer rounded-full shadow-lg hover:bg-blue-600 transition duration-300 hidden md:block"
+                            className="bg-blue-500 text-white px-6 py-2 cursor-pointer rounded-full shadow-lg hover:bg-blue-600 transition duration-300 block md:block"
                         >
                             Create Account
                         </button>
@@ -114,7 +111,7 @@ const Navbar = () => {
                                     key={index}
                                     to={item.path}
                                     className={({ isActive }) => `block px-6 py-3 text-lg font-medium transition ${isActive ? "text-blue-600" : "hover:bg-gray-100"}`}
-                                    onClick={() => {setShowmenu(false); scrollTo(0, 0)}}
+                                    onClick={() => { setShowmenu(false); scrollTo(0, 0) }}
                                 >
                                     <p>{item.name}</p>
                                 </NavLink>
