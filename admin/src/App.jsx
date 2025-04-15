@@ -1,10 +1,26 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import Login from './pages/Login'
+import { ToastContainer, toast } from 'react-toastify';
+import { AdminContext } from './Context/AdminContext';
+import Navbar from './Components/Navbar';
+import Sidebar from './Components/Sidebar';
+import { Outlet } from 'react-router-dom';
 const App = () => {
-  return (
-    <div>
-      <p className='text-3xl text-blue-600'>app</p>
+  const { aToken } = useContext(AdminContext)
+  return aToken ? (
+    <div className='bg-[#f8f4f4]'>
+      <ToastContainer />
+      <Navbar />
+      <div className='flex items-start'>
+        <Sidebar />
+        <Outlet/>
+      </div>
     </div>
+  ) : (
+    <>
+      <Login />
+      <ToastContainer />
+    </>
   )
 }
 
