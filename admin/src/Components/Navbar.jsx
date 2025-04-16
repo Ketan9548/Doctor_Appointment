@@ -3,8 +3,8 @@ import { assets } from '../assets/assets';
 import { AdminContext } from '../Context/AdminContext';
 
 const Navbar = () => {
-    const { aToken,setAtoken } = useContext(AdminContext);
-    const logOut = () =>{
+    const { aToken, setAtoken } = useContext(AdminContext);
+    const logOut = () => {
         aToken && setAtoken('')
         aToken && localStorage.removeItem('admintoken')
     }
