@@ -13,32 +13,34 @@ const Sidebar = () => {
     return (
         <>
             {aToken && (
-                <ul className="w-64 h-full bg-white shadow-md px-4 py-6 space-y-3">
-                    <li>
-                        <NavLink to="/admin-dashboard" className={navLinkStyles}>
-                            <img src={assets.home_icon} alt="Dashboard" className="h-6 w-6" />
-                            <p>Dashboard</p>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/all-appointment" className={navLinkStyles}>
-                            <img src={assets.appointment_icon} alt="Appointment" className=" h-6 w-6" />
-                            <p>Appointment</p>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/all-doctor" className={navLinkStyles}>
-                            <img src={assets.add_icon} alt="Add Doctor" className="h-6 w-6" />
-                            <p>Add Doctor</p>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/doctor-list" className={navLinkStyles}>
-                            <img src={assets.people_icon} alt="Doctor List" className="h-6 w-6" />
-                            <p>Doctor List</p>
-                        </NavLink>
-                    </li>
-                </ul>
+                <div className="h-screen w-full md:w-64 bg-white shadow-md px-4 py-6 space-y-3">
+                    <ul>
+                        <li>
+                            <NavLink to="/admin-dashboard" className={navLinkStyles}>
+                                <img src={assets.home_icon} alt="Dashboard" className="h-6 w-6" />
+                                <p>Dashboard</p>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/all-appointment" className={navLinkStyles}>
+                                <img src={assets.appointment_icon} alt="Appointment" className="h-6 w-6" />
+                                <p>Appointment</p>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/all-doctor" className={navLinkStyles}>
+                                <img src={assets.add_icon} alt="Add Doctor" className="h-6 w-6" />
+                                <p>Add Doctor</p>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/doctor-list" className={navLinkStyles}>
+                                <img src={assets.people_icon} alt="Doctor List" className="h-6 w-6" />
+                                <p>Doctor List</p>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
             )}
         </>
     );

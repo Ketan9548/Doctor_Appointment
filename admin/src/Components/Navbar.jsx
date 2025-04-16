@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
             <div className="flex items-center gap-3">
                 <img src={assets.admin_logo} alt="Admin Logo" className="h-10 w-auto" />
-                <p className="text-xl items-center font-semibold text-gray-800 border-gray-400 border rounded-full px-2">
+                <p className="text-xl items-center font-semibold text-gray-800 border-gray-400 pb-1 border rounded-full px-2">
                     {aToken ? 'Admin' : 'Doctor'}
                 </p>
             </div>

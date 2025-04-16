@@ -60,9 +60,9 @@ const addDoctor = async (req, res) => {
 const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        const payload = email + password
         if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign(email + password, process.env.JWT_SECRET_KEY);
+            const token = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
             res.json({ success: true, token })
         }
         else {
@@ -70,7 +70,7 @@ const loginAdmin = async (req, res) => {
         }
 
     } catch (error) {
-
+        res.status(500).json({ success: false, message: error.message })
     }
 }
 

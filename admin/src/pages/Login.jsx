@@ -13,6 +13,7 @@ const Login = () => {
 
     const onsubmithandler = async (e) => {
         e.preventDefault()
+        console.log('submit')
 
         try {
             if (state === 'Admin') {
@@ -27,10 +28,10 @@ const Login = () => {
                 }
             }
             else {
-
+                toast.error('You are not admin')
             }
         } catch (error) {
-
+            toast.error(error.response.data.message)
         }
     }
 
