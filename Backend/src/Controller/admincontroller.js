@@ -60,15 +60,13 @@ const addDoctor = async (req, res) => {
 const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const payload = email + password
         if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+            const token = jwt.sign(email + password, process.env.JWT_SECRET_KEY);
             res.json({ success: true, token })
         }
         else {
             res.json({ success: false, message: "Invalid Credentials" })
         }
-
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
     }

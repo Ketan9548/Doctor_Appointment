@@ -13,7 +13,7 @@ const Sidebar = () => {
     return (
         <>
             {aToken && (
-                <div className="h-screen w-full md:w-64 bg-white shadow-md px-4 py-6 space-y-3">
+                <div className="h-screen overflow-y-auto">
                     <ul>
                         <li>
                             <NavLink to="/admin-dashboard" className={navLinkStyles}>

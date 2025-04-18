@@ -8,7 +8,7 @@ const Navbar = () => {
         aToken && setAtoken('')
         aToken && localStorage.removeItem('admintoken')
     }
-
+    
     return (
         <div className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
             <div className="flex items-center gap-3">

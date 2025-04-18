@@ -7,18 +7,21 @@ import Sidebar from './Components/Sidebar';
 import { Outlet } from 'react-router-dom';
 const App = () => {
   const { aToken } = useContext(AdminContext)
-  return aToken ? (
-    <div className='bg-[#f8f4f4]'>
-      <ToastContainer />
-      <Navbar />
-      <div className='flex items-start'>
-        <Sidebar />
-        <Outlet/>
-      </div>
-    </div>
-  ) : (
+  return (
     <>
-      <Login />
+      {aToken ? (
+        <div className='bg-[#f8f4f4]'>
+          <Navbar />
+          <div className='flex min-h-screen items-start'>
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto p-4">
+              <Outlet />
+            </main>
+          </div>
+        </div>
+      ) : (
+        <Login />
+      )}
       <ToastContainer />
     </>
   )
