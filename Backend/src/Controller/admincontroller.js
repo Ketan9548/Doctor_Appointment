@@ -72,4 +72,15 @@ const loginAdmin = async (req, res) => {
     }
 }
 
-export { addDoctor, loginAdmin };
+// APi to get all doctors
+const getallDoctors = async (req, res) => {
+    try {
+        const doctors = await doctorModel.find({}).select("-password")
+        const Doctorslength = doctors.length
+        res.json({ success: true, totalNumber: Doctorslength, doctors })
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
+}
+
+export { addDoctor, loginAdmin, getallDoctors };

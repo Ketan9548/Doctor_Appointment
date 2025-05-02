@@ -1,29 +1,34 @@
-import express from 'express'
-import cors from 'cors'
-import 'dotenv/config'
-import connectDB from './Config/mongodb.js'
-import connectCloudinary from './Config/cloudnery.js'
-import adminRouter from './routes/adminRoute.js'
+import express from 'express';
+import cors from 'cors';
+import 'dotenv/config';
+import connectDB from './Config/mongodb.js';
+import connectCloudinary from './Config/cloudnery.js';
+import adminRouter from './routes/adminRoute.js';
+import doctorRouter from './routes/doctorRoute.js';
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 4000;
 
-connectDB()
-connectCloudinary()
+// Connect to DB and Cloudinary
+connectDB();
+connectCloudinary();
 
-// middelware 
+// Middlewares
+app.use(express.json());
+app.use(cors());
 
-app.use(express.json())
-app.use(cors())
+// API Routes
+app.use('/api/admin', adminRouter);
+app.use('/api/doctor', doctorRouter);
+app.use('/api/user', userRouter);
 
-// api endpoints
-app.use('/api/admin', adminRouter)
-
-// api end points
+// Test Route
 app.get('/', (req, res) => {
-    res.send('Api working')
-})
+    res.send('API working');
+});
 
+// Start server
 app.listen(port, () => {
-    console.log(`Server is running on port http://localhost:${port}`)
-})
+    console.log(`Server is running on http://localhost:${port}`);
+});

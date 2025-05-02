@@ -17,11 +17,13 @@ const AddDoctor = () => {
   const [degree, setdegree] = useState('')
   const [address1, setaddress1] = useState('')
   const [address2, setaddress2] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const { backendurl, aToken } = useContext(AdminContext)
 
   const onSubmithandler = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
       if (!docImg) {
         return toast.error('Image not selected!!!')
@@ -61,6 +63,9 @@ const AddDoctor = () => {
       }
     } catch (error) {
       toast.error(error.response.data.message)
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -135,9 +140,14 @@ const AddDoctor = () => {
               <textarea onChange={(e) => setabout(e.target.value)} value={about} placeholder='Write about doctor' rows={5} className="w-full border border-gray-300 rounded px-3 py-2 mt-1 resize-none" required></textarea>
             </div>
 
-            <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold self-start">
-              Add Doctor
+            <button
+              type="submit"
+              className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold self-start"
+              disabled={loading}
+            >
+              {loading ? 'Submitting...' : 'Add Doctor'}
             </button>
+
           </div>
         </form>
       </div>

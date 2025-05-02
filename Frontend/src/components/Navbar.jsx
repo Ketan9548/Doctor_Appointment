@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AppContextProvider } from "../context/AppContext";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const [showmenu, setShowmenu] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [token, setToken] = useState(true);
+
+    const { token, setToken } = useContext(AppContextProvider)
+
+    const logOut = () => {
+        setToken(false);
+        localStorage.removeItem('token');
+    }
 
     const handledropdown = () => {
         setShowDropdown(!showDropdown);
@@ -74,7 +81,7 @@ const Navbar = () => {
                                 <div className="absolute top-14 right-0 bg-white shadow-lg rounded-lg w-48 py-2 text-gray-700 z-50 border border-gray-200">
                                     <button onClick={() => { navigate("/my-profile"); scrollTo(0, 0) }} className="px-4 py-3 hover:bg-gray-100 hover:text-blue-600 cursor-pointer transition rounded-t-lg">My Profile</button>
                                     <button onClick={() => { navigate("/my-appointment"); scrollTo(0, 0) }} className="px-4 py-3 hover:bg-gray-100 hover:text-blue-600 cursor-pointer transition">My Appointment</button>
-                                    <button onClick={() => { setToken(false); setShowDropdown(false); }} className="px-4 py-3 text-red-500 hover:bg-red-100 cursor-pointer transition rounded-b-lg">Logout</button>
+                                    <button onClick={logOut} className="px-4 py-3 text-red-500 hover:bg-red-100 cursor-pointer transition rounded-b-lg">Logout</button>
                                 </div>
                             )}
                         </div>

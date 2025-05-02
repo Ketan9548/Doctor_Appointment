@@ -9,7 +9,7 @@ const Doctor = () => {
   const [showFilter, setshowFilter] = useState(false);
   const pRefs = useRef([]);
 
-  const { doctors } = useContext(AppContextProvider);
+  const { doctors,getdoctordata } = useContext(AppContextProvider);
 
   const filterApply = () => {
     if (speciality) {
@@ -20,6 +20,7 @@ const Doctor = () => {
   };
 
   useEffect(() => {
+    getdoctordata();
     window.scrollTo(0, 0);
   }, [])
   useEffect(() => {
