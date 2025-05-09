@@ -10,18 +10,20 @@ import userRouter from './routes/userRoutes.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
+
+app.use(cors());
+app.use(express.json());
+
 // Connect to DB and Cloudinary
 connectDB();
 connectCloudinary();
 
-// Middlewares
-app.use(express.json());
-app.use(cors());
 
 // API Routes
 app.use('/api/admin', adminRouter);
 app.use('/api/doctor', doctorRouter);
 app.use('/api/user', userRouter);
+
 
 // Test Route
 app.get('/', (req, res) => {

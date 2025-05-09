@@ -3,6 +3,7 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import userModel from '../Models/user.model.js';
 import jwt from 'jsonwebtoken'
+import { v2 as cloudinary } from 'cloudinary'
 
 // strong password validation
 const strongPassword = (password) => {
@@ -104,7 +105,6 @@ const loginUser = async (req, res) => {
 }
 
 // api get user profile data
-
 const getProfile = async (req, res) => {
     try {
         const { userId } = req.body;
@@ -118,5 +118,36 @@ const getProfile = async (req, res) => {
     }
 }
 
+const updateUserprofile = async (req, res) => {
+    try {
+        const { userId, name, phone, address, dob, gender } = req.body
+        const image_file = req.file
 
-export { registerUser, loginUser, getProfile };
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "User ID is required." });
+        }
+
+        if (!name || !phone || !dob || !gender) {
+            return res.status(400).json({ success: false, message: "Missing Details..." });
+        }
+
+        await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
+
+        if (image_file) {
+            // upload image to cloudinary
+            const imageUpload = await cloudinary.uploader.upload(image_file.path, {
+                resource_type: "image",
+            });
+            const imageUrl = imageUpload.secure_url;
+            await userModel.findByIdAndUpdate(userId, { image: imageUrl })
+        }
+
+        res.status(200).json({ success: true, message: "Profile Updated Successfully..." })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+
+export { registerUser, loginUser, getProfile, updateUserprofile };
