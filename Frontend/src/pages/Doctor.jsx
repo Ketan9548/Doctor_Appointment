@@ -1,6 +1,6 @@
 import React, { use, useContext, useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AppContextProvider } from '../context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 const Doctor = () => {
   const { speciality } = useParams();
@@ -9,7 +9,7 @@ const Doctor = () => {
   const [showFilter, setshowFilter] = useState(false);
   const pRefs = useRef([]);
 
-  const { doctors,getdoctordata } = useContext(AppContextProvider);
+  const { doctors, getdoctordata } = useContext(AppContext);
 
   const filterApply = () => {
     if (speciality) {
@@ -20,7 +20,6 @@ const Doctor = () => {
   };
 
   useEffect(() => {
-    getdoctordata();
     window.scrollTo(0, 0);
   }, [])
   useEffect(() => {

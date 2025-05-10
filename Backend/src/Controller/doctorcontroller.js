@@ -16,7 +16,7 @@ const changeAvailablity = async (req, res) => {
 const doctorlist = async (req, res) => {
     try {
         const doctors = await doctorModel.find({}).select(['-email', '-password']);
-        res.json({ success: true, doctors })
+        res.json({ success: true, Doctors: doctors })
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
         console.log(error.message)

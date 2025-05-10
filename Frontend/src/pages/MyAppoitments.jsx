@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { AppContextProvider } from '../context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 const MyAppointments = () => {
-  const { doctors } = useContext(AppContextProvider);
+  const { doctors } = useContext(AppContext);
 
   return (
     <div className="max-w-5xl mx-auto px-4">

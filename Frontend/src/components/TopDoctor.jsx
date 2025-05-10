@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContextProvider } from "../context/AppContext";
+import { AppContext } from "../context/AppContext";
 
 const Topdoctor = () => {
     const navigate = useNavigate();
-    const { doctors } = useContext(AppContextProvider);
+    const { doctors } = useContext(AppContext);
     return (
         <div className="flex flex-col items-center gap-6 py-16 text-gray-800 bg-gray-50">
             {/* Heading */}

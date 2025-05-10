@@ -1,5 +1,5 @@
 import React, { useState, useContext, use } from 'react'
-import { AppContextProvider } from '../context/AppContext'
+import { AppContext } from '../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -13,13 +13,16 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const { backendurl, token, setToken } = useContext(AppContextProvider)
+  const { backendurl, token, setToken } = useContext(AppContext)
 
   const onSubmitButton = async (e) => {
     e.preventDefault();
     try {
       if (state === 'Sign Up') {
         const { data } = await axios.post(backendurl + '/api/user/register', { name, email, password })
+        if(!data){
+          toast.error(data.message)
+        }
         if (data.success) {
           localStorage.setItem('token', data.token)
           setToken(data.token)

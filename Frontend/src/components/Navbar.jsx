@@ -1,15 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import React from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContextProvider } from "../context/AppContext";
+import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const [showmenu, setShowmenu] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
 
-    const { token, setToken } = useContext(AppContextProvider)
+    const { token, setToken } = useContext(AppContext)
 
     const logOut = () => {
         setToken(false);
@@ -21,7 +20,7 @@ const Navbar = () => {
 
         setTimeout(() => {
             setShowDropdown(false);
-        }, 1000);
+        }, 3000);
     };
 
     return (
