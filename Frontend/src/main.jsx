@@ -11,7 +11,7 @@ import Contacts from './pages/Contacts.jsx'
 import Myprofile from './pages/Myprofile.jsx'
 import MyAppoitments from './pages/MyAppoitments.jsx'
 import Appoitments from './pages/Appoitments.jsx'
-import AppContext from './context/AppContext.jsx'
+import AppContextProvider from './context/AppContext.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,8 +31,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AppContext>
+    <AppContextProvider>
       <RouterProvider router={router} />
-    </AppContext>
+    </AppContextProvider>
   </StrictMode>,
 )

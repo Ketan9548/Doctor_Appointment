@@ -2,16 +2,17 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 
 const MyProfile = () => {
-  const { userData } = useContext(AppContext)
+  const { userData, setuserdata } = useContext(AppContext)
+
 
   const [isEdit, setIsEdit] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
+    setuserdata((prev) => ({ ...prev, [name]: value }));
   };
 
-  return (
+  return userData && (
     <div className="flex flex-col lg:flex-row w-full min-h-screen bg-gray-100 p-6">
       {/* Profile Section */}
       <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-lg border border-gray-200">
@@ -76,15 +77,28 @@ const MyProfile = () => {
             <p className="text-gray-600">
               <span className="font-medium">Address:</span>
               {isEdit ? (
-                <input
-                  type="text"
-                  name="address"
-                  value={userData.address}
-                  onChange={handleChange}
-                  className="w-full p-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                />
+                <>
+                  <input
+                    type="text"
+                    name= "Line1"
+                    value={userData.address.line1}
+                    onChange={handleChange}
+                    className="w-full p-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    type="text"
+                    name="Line2"
+                    value={userData.address.line2}
+                    onChange={handleChange}
+                    className="w-full p-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                  />
+                </>
+
               ) : (
-                <span className="ml-2">{userData.address}</span>
+                <div>
+                  <span className="ml-2">{userData.address.line1}</span>
+                  <span className="ml-2">{userData.address.line2}</span>
+                </div>
               )}
             </p>
           </div>
@@ -147,7 +161,7 @@ const MyProfile = () => {
           whether through coding, design, or leadership. I am excited about new challenges, eager to learn, and always striving for excellence in everything I do.
         </p>
       </div>
-    </div>
+    </div >
   );
 };
 

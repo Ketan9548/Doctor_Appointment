@@ -2,9 +2,9 @@ import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-export const AppContext = createContext(); // ✅ Use AppContext
+export const AppContext = createContext();
 
-const AppContextProvider = ({ children }) => { // ✅ Rename component to AppContextProvider
+const AppContextProvider = ({ children }) => {
     const currencysymble = '$';
     const [doctors, setDoctor] = useState([]);
     const [token, setToken] = useState(localStorage.getItem('token') || false);
@@ -25,12 +25,13 @@ const AppContextProvider = ({ children }) => { // ✅ Rename component to AppCon
             console.log(error.message);
         }
     }
-
+    // console.log("token is: ",token) 
+    const usertoken = token;
     const loaduserprofiledata = async () => {
         try {
-            const { data } = await axios.get(`${backendurl}/api/user/get-profile`, { headers: { token } });
-            setuserdata(data.user); // assuming data.user contains user profile
-            console.log("the value is: ", data);
+            const { data } = await axios.get(`${backendurl}/api/user/get-profile`, { headers: { usertoken } });
+            console.log(data.UserData);
+            setuserdata(data.UserData);
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -48,8 +49,8 @@ const AppContextProvider = ({ children }) => { // ✅ Rename component to AppCon
             setuserdata(false);
         }
     }, [token]);
-
-    const value = {
+    console.log(typeof(userData))
+    const values = {
         doctors,
         currencysymble,
         backendurl,
@@ -62,7 +63,7 @@ const AppContextProvider = ({ children }) => { // ✅ Rename component to AppCon
     };
 
     return (
-        <AppContext.Provider value={value}>
+        <AppContext.Provider value={values}>
             {children}
         </AppContext.Provider>
     );
