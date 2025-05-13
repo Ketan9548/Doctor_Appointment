@@ -1,11 +1,44 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
+import { assets } from '../assets/assets'
+import { toast } from "react-toastify";
 
 const MyProfile = () => {
-  const { userData, setuserdata } = useContext(AppContext)
+  const { userData, setuserdata, backendurl, token, loaduserprofiledata } = useContext(AppContext)
 
 
   const [isEdit, setIsEdit] = useState(false);
+  const [image, setImage] = useState(false);
+
+  const usertoken = token;
+
+  const updateUserProfileData = async () => {
+    try {
+      const formdata = new FormData();
+      formdata.append('name', userData.name);
+      formdata.append('email', userData.email);
+      formdata.append('address', JSON.stringify(userData.address));
+      formdata.append('gender', userData.gender);
+      formdata.append('dob', userData.dob);
+      image && formdata.append('image', image)
+
+      const { data } = await axios.put(`${backendurl}/api/user/update-profile`, formdata, { headers: { usertoken } });
+      if (data.success) {
+        toast.success(data.message);
+        loaduserprofiledata
+        setIsEdit(false)
+        setImage(false)
+      }
+      else {
+        toast.error(data.message);
+      }
+
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,14 +47,21 @@ const MyProfile = () => {
 
   return userData && (
     <div className="flex flex-col lg:flex-row w-full min-h-screen bg-gray-100 p-6">
+
       {/* Profile Section */}
       <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-lg border border-gray-200">
         <div className="flex flex-col items-center text-center">
-          <img
-            src={userData.image}
-            alt="Profile"
-            className="w-24 h-24 rounded-full border-2 border-gray-300"
-          />
+          {isEdit ? <label>
+            <div className="inline-block relative cursor-pointer">
+              <img className="w-56 rounded opacity-95" src={image ? URL.createObjectURL(image) : userData.image} alt="" />
+              <img
+                className="w-12 h-12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full p-1 shadow-md"
+                src={assets.upload_icon}
+                alt="Upload Icon"
+              />
+            </div>
+            <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" />
+          </label> : <img className="w-36 rounded" src={userData.image} />}
           <div className="mt-4">
             {isEdit ? (
               <input
@@ -80,7 +120,7 @@ const MyProfile = () => {
                 <>
                   <input
                     type="text"
-                    name= "Line1"
+                    name="Line1"
                     value={userData.address.line1}
                     onChange={handleChange}
                     className="w-full p-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
@@ -144,14 +184,21 @@ const MyProfile = () => {
         </div>
 
         <button
-          className="w-full mt-4 py-2 bg-white border text-black hover:text-white cursor-pointer font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
-          onClick={() => setIsEdit(!isEdit)}
+          className={`w-full mt-4 py-2 ${isEdit ? "bg-blue-600 text-white" : "bg-white text-black hover:text-white hover:bg-blue-600"} 
+              border font-semibold rounded-lg transition duration-300`}
+          onClick={async () => {
+            if (isEdit) {
+              await updateUserProfileData();
+              loaduserprofiledata();
+            }
+            setIsEdit(!isEdit);
+          }}
         >
-          {isEdit ? "Save" : "Edit Profile"}
+          {isEdit ? "Save Profile" : "Edit Profile"}
         </button>
+
       </div>
 
-      {/* Additional Content Section */}
       <div className="w-full lg:w-2/3 bg-white p-6 mt-6 lg:mt-0 lg:ml-6 rounded-lg shadow-lg border border-gray-200">
         <h2 className="text-2xl font-bold text-blue-600">Hello!</h2>
         <p className="text-lg leading-relaxed mt-2 text-gray-700">
