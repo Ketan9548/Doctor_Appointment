@@ -1,9 +1,8 @@
 # Doctor Appointment System 🏥
 
-[![GitHub License](https://img.shields.io/github/license/yourusername/doctor-appointment-system)](https://github.com/yourusername/doctor-appointment-system/blob/main/LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/doctor-appointment-system)](https://github.com/yourusername/doctor-appointment-system/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/yourusername/doctor-appointment-system)](https://github.com/yourusername/doctor-appointment-system/issues)
-[![Live Demo](https://img.shields.io/badge/demo-live-green)](https://your-demolink.com)
+[![GitHub Profile](https://github.com/Ketan9548)
+[![Portfolio](https://img.shields.io/badge/Portfolio-FF4088?logo=vercel&logoColor=white)](https://portfolio-1-mf6l.onrender.com/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)](www.linkedin.com/in/ketan-chauhan-82056021a)
 
 A **full-stack web application** for booking and managing medical appointments, featuring AI-powered symptom analysis and real-time notifications. Built with modern technologies to streamline healthcare workflows.
 
