@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { assets } from '../assets/assets'
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import imageCompression from 'browser-image-compression';
 
 const MyProfile = () => {
   const { userData, setuserdata, backendurl, token, loaduserprofiledata } = useContext(AppContext)
@@ -16,16 +18,17 @@ const MyProfile = () => {
     try {
       const formdata = new FormData();
       formdata.append('name', userData.name);
-      formdata.append('email', userData.email);
+      formdata.append('phone', userData.phone);
       formdata.append('address', JSON.stringify(userData.address));
       formdata.append('gender', userData.gender);
+      formdata.append('email', userData.email);
       formdata.append('dob', userData.dob);
       image && formdata.append('image', image)
 
-      const { data } = await axios.put(`${backendurl}/api/user/update-profile`, formdata, { headers: { usertoken } });
+      const { data } = await axios.post(`${backendurl}/api/user/update-profile`, formdata, { headers: { usertoken } });
       if (data.success) {
         toast.success(data.message);
-        loaduserprofiledata
+        await loaduserprofiledata();
         setIsEdit(false)
         setImage(false)
       }
@@ -36,19 +39,44 @@ const MyProfile = () => {
     } catch (error) {
       console.log(error.message);
       toast.error(error.message);
-
     }
   }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1024,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      setImage(compressedFile);
+    } catch (error) {
+      toast.error("Image compression failed");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setuserdata((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setuserdata((prev) => ({
+      ...prev,
+      address: {
+        ...prev.address,
+        [name]: value
+      }
+    }));
+  };
+
   return userData && (
     <div className="flex flex-col lg:flex-row w-full min-h-screen bg-gray-100 p-6">
-
       {/* Profile Section */}
+      <ToastContainer />
       <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-lg border border-gray-200">
         <div className="flex flex-col items-center text-center">
           {isEdit ? <label>
@@ -60,7 +88,7 @@ const MyProfile = () => {
                 alt="Upload Icon"
               />
             </div>
-            <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" />
+            <input onChange={handleImageUpload} type="file" id="image" />
           </label> : <img className="w-36 rounded" src={userData.image} />}
           <div className="mt-4">
             {isEdit ? (
@@ -86,7 +114,7 @@ const MyProfile = () => {
             Contact Information
           </p>
           <div className="mt-2 space-y-2">
-            <p className="text-gray-600">
+            <div className="text-gray-600">
               <span className="font-medium">Email:</span>
               {isEdit ? (
                 <input
@@ -99,8 +127,8 @@ const MyProfile = () => {
               ) : (
                 <span className="ml-2">{userData.email}</span>
               )}
-            </p>
-            <p className="text-gray-600">
+            </div>
+            <div className="text-gray-600">
               <span className="font-medium">Phone:</span>
               {isEdit ? (
                 <input
@@ -113,41 +141,40 @@ const MyProfile = () => {
               ) : (
                 <span className="ml-2">{userData.phone}</span>
               )}
-            </p>
-            <p className="text-gray-600">
+            </div>
+            <div className="text-gray-600">
               <span className="font-medium">Address:</span>
               {isEdit ? (
                 <>
                   <input
                     type="text"
-                    name="Line1"
+                    name="line1"
                     value={userData.address.line1}
-                    onChange={handleChange}
+                    onChange={handleAddressChange}
                     className="w-full p-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
-                    name="Line2"
+                    name="line2"
                     value={userData.address.line2}
-                    onChange={handleChange}
+                    onChange={handleAddressChange}
                     className="w-full p-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </>
-
               ) : (
                 <div>
                   <span className="ml-2">{userData.address.line1}</span>
                   <span className="ml-2">{userData.address.line2}</span>
                 </div>
               )}
-            </p>
+            </div>
           </div>
         </div>
 
         <hr className="my-4" />
 
         <div>
-          <p className="text-xl font-semibold text-gray-700">Basic Information</p>
+          <span className="text-xl font-semibold text-gray-700">Basic Information</span>
           <div className="mt-2 space-y-2">
             <p className="text-gray-600">
               <span className="font-medium">Gender:</span>
@@ -183,19 +210,25 @@ const MyProfile = () => {
           </div>
         </div>
 
-        <button
-          className={`w-full mt-4 py-2 ${isEdit ? "bg-blue-600 text-white" : "bg-white text-black hover:text-white hover:bg-blue-600"} 
-              border font-semibold rounded-lg transition duration-300`}
-          onClick={async () => {
-            if (isEdit) {
-              await updateUserProfileData();
-              loaduserprofiledata();
-            }
-            setIsEdit(!isEdit);
-          }}
-        >
-          {isEdit ? "Save Profile" : "Edit Profile"}
-        </button>
+        <div className="mt-4 flex justify-center">
+          {
+            isEdit ? (
+              <button
+                className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                onClick={updateUserProfileData}
+              >
+                Save Information
+              </button>
+            ) : (
+              <button
+                className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                onClick={() => setIsEdit(true)}
+              >
+                Edit
+              </button>
+            )
+          }
+        </div>
 
       </div>
 

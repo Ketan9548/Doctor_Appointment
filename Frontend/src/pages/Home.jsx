@@ -13,7 +13,7 @@ const Home = () => {
             <SpecialityMenu />
             <Topdoctor />
             <Banner />
-            <ToastContainer position='top-right' autoClose={2000} theme='dark' />
+            <ToastContainer/>
         </div>
     )
 }

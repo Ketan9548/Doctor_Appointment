@@ -1,19 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import RelatedDoctor from "../components/RelatedDoctor";
+import { toast, ToastContainer } from "react-toastify";
+
 
 const Appointments = () => {
   const { docId } = useParams();
-  const { doctors, currencysymble } = useContext(AppContext);
+  const { doctors, currencysymble, getdoctordata, backendurl, token } = useContext(AppContext);
   const daysofweeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  const navigate = useNavigate();
 
   const [docInfo, setDocInfo] = useState(null);
   const [docSlots, setDocSlots] = useState([]);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [loading, setLoading] = useState(true);
+
+
+  const bookappointment = async () => {
+    if (!token) {
+      toast.warn('Please login to book an appointment')
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      navigate('/login')
+      return;
+    }
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -70,6 +84,7 @@ const Appointments = () => {
   return (
     docInfo && (
       <div className="container mx-auto px-4 py-8 flex flex-col items-center">
+        <ToastContainer />
         {/* Doctor Information Section */}
         <div className="w-full max-w-5xl bg-white p-8 rounded-xl shadow-lg">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -151,7 +166,7 @@ const Appointments = () => {
           </div>
         </div>
 
-        <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white text-lg font-semibold px-16 py-3 rounded-full my-6 shadow-md transition-all duration-300">
+        <button onClick={bookappointment} className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white text-lg font-semibold px-16 py-3 rounded-full my-6 shadow-md transition-all duration-300">
           Book an Appointment
         </button>
 

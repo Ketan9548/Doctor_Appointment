@@ -49,7 +49,6 @@ const AppContextProvider = ({ children }) => {
             setuserdata(false);
         }
     }, [token]);
-    console.log(typeof(userData))
     const values = {
         doctors,
         currencysymble,

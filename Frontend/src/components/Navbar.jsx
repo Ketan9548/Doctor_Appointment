@@ -8,7 +8,7 @@ const Navbar = () => {
     const [showmenu, setShowmenu] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
 
-    const { token, setToken } = useContext(AppContext)
+    const { token, setToken,userData } = useContext(AppContext)
 
     const logOut = () => {
         setToken(false);
@@ -62,11 +62,11 @@ const Navbar = () => {
 
                 {/* Profile & Login Section */}
                 <div className="flex items-center gap-6">
-                    {token ? (
+                    {token && userData ? (
                         <div className="relative cursor-pointer">
                             {/* Profile Image */}
                             <div className="flex items-center gap-2">
-                                <img className="w-12 h-12 rounded-full border-2 border-gray-300 shadow-lg" src={assets.profile_pic} alt="Profile" />
+                                <img className="w-12 h-12 rounded-full border-2 border-gray-300 shadow-lg" src={userData.image} alt="Profile" />
                                 <img
                                     className={`w-4 transition-transform duration-300 ${showDropdown ? "rotate-180" : ""}`}
                                     src={assets.dropdown_icon}
