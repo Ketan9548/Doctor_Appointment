@@ -1,6 +1,6 @@
 import React, { useState, useContext, use } from 'react'
 import { AppContext } from '../context/AppContext'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -20,13 +20,18 @@ const Login = () => {
     try {
       if (state === 'Sign Up') {
         const { data } = await axios.post(backendurl + '/api/user/register', { name, email, password })
-        if(!data){
+        if (!data) {
           toast.error(data.message)
         }
         if (data.success) {
           localStorage.setItem('token', data.token)
+          // console.log(data)
           setToken(data.token)
+          setEmail('')
+          setPassword('')
+          setName('')
           toast.success(data.message)
+          setState('Login')
         } else {
           toast.error(data.message)
         }
@@ -36,7 +41,8 @@ const Login = () => {
         if (data.success) {
           localStorage.setItem('token', data.Token)
           setToken(data.Token)
-          toast.success(data.message)
+          setEmail('')
+          setPassword('')
         } else {
           toast.error(data.message)
         }
@@ -50,12 +56,14 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
+      toast.success("Login successful")
       navigate('/')
     }
   }, [token])
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center bg-gray-100 px-4">
+      <ToastContainer />
       <form onSubmit={onSubmitButton} className="bg-white p-8 rounded-lg shadow-md w-96 border border-gray-200">
         <div className="text-center mb-6">
           <p className="text-2xl font-semibold text-gray-800">{state === 'Sign Up' ? 'Create Account' : "Login"}</p>

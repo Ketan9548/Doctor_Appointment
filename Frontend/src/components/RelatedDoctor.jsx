@@ -13,7 +13,7 @@ const RelatedDoctor = ({ Specialty, docId }) => {
             const doctorsData = doctors.filter((doc) => doc.speciality === Specialty && doc._id !== docId);
             setRelDoc(doctorsData);
         }
-        console.log('this is related doctors')
+        // console.log('this is related doctors')
     }, [doctors, Specialty, docId]);
 
     return (

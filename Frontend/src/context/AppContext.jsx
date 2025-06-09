@@ -22,18 +22,21 @@ const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             toast.error(error.message);
-            console.log(error.message);
+            // console.log(error.message);
         }
     }
     // console.log("token is: ",token) 
     const usertoken = token;
     const loaduserprofiledata = async () => {
         try {
+            if (localStorage.getItem('token') === 'undefined') {
+                return;
+            }
             const { data } = await axios.get(`${backendurl}/api/user/get-profile`, { headers: { usertoken } });
-            console.log(data.UserData);
+            // console.log(data.UserData);
             setuserdata(data.UserData);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error(error.message);
         }
     }

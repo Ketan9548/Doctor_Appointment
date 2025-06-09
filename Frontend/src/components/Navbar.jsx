@@ -8,7 +8,7 @@ const Navbar = () => {
     const [showmenu, setShowmenu] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
 
-    const { token, setToken,userData } = useContext(AppContext)
+    const { token, setToken, userData } = useContext(AppContext)
 
     const logOut = () => {
         setToken(false);

@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import RelatedDoctor from "../components/RelatedDoctor";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 
 const Appointments = () => {
@@ -19,7 +20,6 @@ const Appointments = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   const bookappointment = async () => {
     if (!token) {
       toast.warn('Please login to book an appointment')
@@ -27,11 +27,32 @@ const Appointments = () => {
       navigate('/login')
       return;
     }
+    try {
+      const date = docSlots[selectedDayIndex][0].datetime;
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      const slotDate = day + "_" + month + "_" + year;
+
+      const { data } = await axios.post(backendurl + '/api/user/book-appointment', { docId, slotDate, slotTime: selectedSlot }, { headers: { usertoken: token } })
+      if (data.success) {
+        toast.success(data.message)
+        getdoctordata()
+        navigate('/my-appointment')
+      }
+      else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
   }
 
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchDocInfo();
+    console.log(docSlots)
   }, [doctors, docId]);
 
   useEffect(() => {
@@ -71,13 +92,25 @@ const Appointments = () => {
           hour: "2-digit",
           minute: "2-digit",
         });
-        timeSlots.push({ datetime: new Date(startTime), time: formattedTime });
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() + 1;
+        let year = currentDate.getFullYear();
+
+        const slotDate = day + "_" + month + "_" + year
+        const slotTime = formattedTime
+        const isSlotAvailable = docInfo.slot_booked[slotDate] && docInfo.slot_booked[slotDate].includes(slotTime) ? false : true;
+
+        if (isSlotAvailable) {
+          timeSlots.push({ datetime: new Date(startTime), time: formattedTime });
+        }
+
         startTime.setMinutes(startTime.getMinutes() + 30);
       }
       slotsByDay.push(timeSlots);
     }
     setDocSlots(slotsByDay);
   };
+  // console.log(docSlots)
 
   if (loading) return <p className="text-center text-lg">Loading...</p>;
 

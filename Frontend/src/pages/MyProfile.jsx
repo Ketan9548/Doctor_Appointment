@@ -15,7 +15,7 @@ const MyProfile = () => {
   const usertoken = token;
 
   const updateUserProfileData = async () => {
-    try {
+     try {
       const formdata = new FormData();
       formdata.append('name', userData.name);
       formdata.append('phone', userData.phone);
