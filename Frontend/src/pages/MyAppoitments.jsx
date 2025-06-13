@@ -119,7 +119,7 @@ const MyAppointments = () => {
         {appointment.length <= 0 ? "No Appointments" : "My Appointments"}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {appointment.map((item, index) => (
+        {appointment.filter((item) => item.cancelled === false).map((item, index) => (
           <div key={index} className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center md:items-start text-center md:text-left border border-gray-200">
             <img
               src={item.docData.image}
@@ -150,7 +150,7 @@ const MyAppointments = () => {
                   Pay Online
                 </button>
               )}
-              {!item.cancelled && (
+              {!item.cancelled && !item.payment && (
                 <button
                   onClick={() => cancelAppointment(item._id)}
                   className="flex-1 min-w-[120px] bg-red-500 cursor-pointer text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition"

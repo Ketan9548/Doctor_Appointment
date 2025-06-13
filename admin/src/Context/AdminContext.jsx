@@ -9,6 +9,7 @@ import React from 'react'
 const AdminContextProvider = (props) => {
     const [doctors, setDoctors] = useState([])
     const [aToken, setAtoken] = useState(localStorage.getItem('admintoken') ? localStorage.getItem('admintoken') : '')
+    const [appointments, setAppointments] = useState([])
     const backendurl = import.meta.env.VITE_BAKCEND_URL
     const getallDoctors = async () => {
         try {
@@ -42,9 +43,25 @@ const AdminContextProvider = (props) => {
         }
     }
 
+    const getAppointments = async () => {
+        try {
+            const { data } = await axios.post(backendurl + '/api/admin/all-appointments', { headers: { aToken } })
+            if (data.success) {
+                setAppointments(data.appointment)
+            }
+            else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+    }
+
     const value = {
         aToken, setAtoken,
         backendurl, doctors, getallDoctors, changeAvailability
+        , getAppointments , appointments
     }
     return (
         <>
