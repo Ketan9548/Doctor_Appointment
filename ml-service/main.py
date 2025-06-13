@@ -13,7 +13,7 @@ def test():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json['symptoms']  # e.g., [0, 1, 0, ...]
+    data = request.json['symptoms']
     prediction = model.predict([data])
     return jsonify({'disease': prediction[0]})
 

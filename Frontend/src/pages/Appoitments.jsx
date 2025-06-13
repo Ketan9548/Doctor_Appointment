@@ -14,6 +14,8 @@ const Appointments = () => {
 
   const navigate = useNavigate();
 
+  const usertoken = token
+
   const [docInfo, setDocInfo] = useState(null);
   const [docSlots, setDocSlots] = useState([]);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
@@ -34,11 +36,12 @@ const Appointments = () => {
       let year = date.getFullYear();
       const slotDate = day + "_" + month + "_" + year;
 
-      const { data } = await axios.post(backendurl + '/api/user/book-appointment', { docId, slotDate, slotTime: selectedSlot }, { headers: { usertoken: token } })
+      const { data } = await axios.post(backendurl + '/api/user/book-appointment', { docId, slotDate, slotTime: selectedSlot }, { headers: { usertoken } })
       if (data.success) {
         toast.success(data.message)
         getdoctordata()
         navigate('/my-appointment')
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       else {
         toast.error(data.message)
