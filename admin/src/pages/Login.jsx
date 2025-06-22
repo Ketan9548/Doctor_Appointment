@@ -1,43 +1,53 @@
 import React, { useContext, useState } from 'react';
-import { assets } from '../assets/assets.js';
 import { AdminContext } from '../Context/AdminContext.jsx';
-import axios from 'axios'
+import axios from 'axios';
 import { toast } from 'react-toastify';
+// import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [state, setState] = useState('Admin');
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const { setAtoken, backendurl } = useContext(AdminContext);
+    // const navigate = useNavigate();
 
     const onsubmithandler = async (e) => {
-        e.preventDefault()
-        console.log('submit')
+        e.preventDefault();
+        setLoading(true);
 
         try {
+            let url = '';
             if (state === 'Admin') {
-                const { data } = await axios.post(backendurl + '/api/admin/login', { email, password })
-                if (data.success) {
-                    localStorage.setItem('admintoken', data.token)
-                    setAtoken(data.token)
-                    console.log("token: ", data.token)
-                }
-                else {
-                    toast.error(data.message)
-                }
+                url = '/api/admin/login';
+            } else if (state === 'Doctor') {
+                url = '/api/doctor/login';
             }
-            else {
-                toast.error('You are not admin')
+
+            const { data } = await axios.post(backendurl + url, { email, password });
+
+            if (data.success) {
+                localStorage.setItem(`${state.toLowerCase()}token`, data.token);
+                setAtoken(data.token);
+            } else {
+                toast.error(data.message);
             }
+
         } catch (error) {
-            toast.error(error.response.data.message)
+            console.error(error);
+            toast.error(error.response?.data?.message || "Login failed");
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <form onSubmit={onsubmithandler} className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md">
+        <div className="min-h-screen flex items-center justify-center px-4">
+            <form
+                onSubmit={onsubmithandler}
+                className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md"
+            >
                 <div>
                     <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">
                         {state} Login
@@ -69,9 +79,10 @@ const Login = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                        disabled={loading}
+                        className={`w-full ${loading ? 'bg-blue-300' : 'bg-blue-600 hover:bg-blue-700'} cursor-pointer text-white font-semibold py-2 rounded-lg transition duration-300`}
                     >
-                        Login
+                        {loading ? 'Logging in...' : 'Login'}
                     </button>
 
                     <p className="text-center text-sm text-gray-600 mt-4">

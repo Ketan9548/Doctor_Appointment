@@ -1,19 +1,18 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { toast } from 'react-toastify'
 
 export const AdminContext = createContext();
 
-import React from 'react'
-
 const AdminContextProvider = (props) => {
     const [doctors, setDoctors] = useState([])
-    const [aToken, setAtoken] = useState(localStorage.getItem('admintoken') ? localStorage.getItem('admintoken') : '')
+    const [atoken, setAtoken] = useState(localStorage.getItem('admintoken') ? localStorage.getItem('admintoken') : '')
     const [appointments, setAppointments] = useState([])
     const backendurl = import.meta.env.VITE_BAKCEND_URL
+
     const getallDoctors = async () => {
         try {
-            const { data } = await axios.post(backendurl + '/api/admin/all-doctors', {}, { headers: { aToken } })
+            const { data } = await axios.post(backendurl + '/api/admin/all-doctors', {}, { headers: { atoken } })
             if (data.success) {
                 setDoctors(data.doctors)
                 console.log(data.doctors)
@@ -29,7 +28,7 @@ const AdminContextProvider = (props) => {
 
     const changeAvailability = async (docID) => {
         try {
-            const { data } = await axios.post(backendurl + '/api/admin/change-availabilty', { docID }, { headers: { aToken } })
+            const { data } = await axios.post(backendurl + '/api/admin/change-availabilty', { docID }, { headers: { atoken } })
             if (data.success) {
                 toast.success(data.message)
                 getallDoctors()
@@ -45,7 +44,7 @@ const AdminContextProvider = (props) => {
 
     const getAppointments = async () => {
         try {
-            const { data } = await axios.post(backendurl + '/api/admin/all-appointments', { headers: { aToken } })
+            const { data } = await axios.post(backendurl + '/api/admin/all-appointments', { headers: { atoken } })
             if (data.success) {
                 setAppointments(data.appointment)
             }
@@ -59,7 +58,7 @@ const AdminContextProvider = (props) => {
     }
 
     const value = {
-        aToken, setAtoken,
+        atoken, setAtoken,
         backendurl, doctors, getallDoctors, changeAvailability
         , getAppointments , appointments
     }

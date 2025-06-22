@@ -1,14 +1,15 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useContext } from 'react'
+import { AdminContext } from '../../Context/AdminContext'
 
 const AllApoitment = () => {
-  const { aToken, getAppointments, appointments } = useContext(AdminContext)
+  const { atoken, getAppointments } = useContext(AdminContext)
   useEffect(() => {
-    if (aToken) {
+    if (atoken) {
       getAppointments()
     }
-  }, [aToken])
+  }, [atoken])
   return (
     <>
       <div>
