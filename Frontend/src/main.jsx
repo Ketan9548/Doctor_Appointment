@@ -8,7 +8,7 @@ import Doctor from './pages/Doctor.jsx'
 import Login from './pages/Login.jsx'
 import About from './pages/About.jsx'
 import Contacts from './pages/Contacts.jsx'
-import Myprofile from './pages/Myprofile.jsx'
+import MyProfile from './pages/MyProfile.jsx'
 import MyAppoitments from './pages/MyAppoitments.jsx'
 import Appoitments from './pages/Appoitments.jsx'
 import AppContextProvider from './context/AppContext.jsx'
@@ -22,7 +22,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route path='/about' element={<About />} />
       <Route path='/contact' element={<Contacts />} />
-      <Route path='/my-profile' element={<Myprofile />} />
+      <Route path='/my-profile' element={<MyProfile />} />
       <Route path='/my-appointment' element={<MyAppoitments />} />
       <Route path='/appointment/:docId' element={<Appoitments />} />
     </Route >
